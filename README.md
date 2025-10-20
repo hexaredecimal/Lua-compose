@@ -28,7 +28,7 @@ function counterAppWindow()
     }
   }
 end
-``
+```
 
 # Features: 
 - [x] Declarative API
