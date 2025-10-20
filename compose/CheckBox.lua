@@ -15,7 +15,7 @@ setmetatable(CheckBox, {
         local self = setmetatable({}, CheckBox)
         self.text = opts.text or ""
         self.text = tostring(self.text)
-        self.value = false;
+        self.value = opts.value or false;
         self.onToggle = opts.onToggle or function(_) end
         return self
     end
