@@ -30,6 +30,25 @@ function counterAppWindow()
 end
 ```
 
+# Installation
+```lua
+-- Clone git@github.com:hexaredecimal/Lua-compose.git and copy the "compose" subdirectory into your project source root.
+-- In other words put "compose" near your "main.lua" file or where it will be imported.
+-- Then simply do:
+
+local Window = require "compose.Window"
+local Button = require "compose.Button"
+-- etc for each component you need. 
+
+Window {
+  width = 200,
+  height = 150, 
+
+  Button { text = "Click Me" }
+}
+
+```
+
 # Features: 
 - [x] Declarative API
 - [X] State Management
