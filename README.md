@@ -36,7 +36,7 @@ end
 
 Here is a bigger example. An implementation of a simple form. 
 
-```
+```lua
 local App = require "compose.App"
 local Window = require "compose.Window"
 local Button = require "compose.Button"
