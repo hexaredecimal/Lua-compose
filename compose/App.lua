@@ -4,8 +4,9 @@ if SLAB_PATH == nil then
 end
 
 local Slab = require (SLAB_PATH .. 'API')
+local Style = require (SLAB_PATH .. 'Style')
 local UI = require(SLAB_PATH .. "UI")
-local State = require(SLAB_PATH .. "State")
+local Remember = require(SLAB_PATH .. "Remember")
 
 
 local App = {}
@@ -22,7 +23,7 @@ setmetatable(App, {
 
         Slab.Update(dt)
         
-        State.setWindowContext("App State") 
+        Remember.setWindowContext("AppState_") 
       
         UI.push(self)
         UI.beginDrawing()

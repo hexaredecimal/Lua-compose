@@ -5,7 +5,8 @@ end
 
 local Slab = require (SLAB_PATH .. 'API')
 local UI = require(SLAB_PATH .. "UI")
-local State = require(SLAB_PATH .. "State")
+local Remember = require(SLAB_PATH .. "Remember")
+
 
 local Window = {}
 Window.__index = Window
@@ -16,7 +17,11 @@ Window.defaults = {
     height = 50,
     title = "My Window",
     isOpen = true,
-    minimizable = true
+    minimizable = true,
+    resizable = true,
+    movable = true,
+    focusable = true,
+    border = 4.0
 }
 
 setmetatable(Window, {
@@ -29,10 +34,16 @@ setmetatable(Window, {
         self.title    = opts.title    or Window.defaults.title
         self.isOpen = opts.isOpen or Window.defaults.isOpen
         self.minimizable = opts.minimizable or Window.defaults.minimizable
+        self.resizable = opts.resizable or Window.defaults.resizable
+        self.movable = opts.movable or Window.defaults.movable
+        self.focusable = opts.focusable or Window.defaults.focusable
+        self.bgColor = opts.bgColor
+        self.border = opts.border or Window.defaults.border
+
 
         self.id = opts.id or "Window_" .. UI.nextId()
         self.children = {}
-        State.setWindowContext(self.title) 
+        Remember.setWindowContext(self.title) 
 
         
         for _, child in pairs(opts) do
@@ -52,9 +63,14 @@ function Window:render()
     Title = self.title, 
     IsOpen = self.isOpen,
     ShowMinimize = self.minimizable,
-    AutoSizeWindow = false,
+    AutoSizeWindow = self.resizable,
     W = self.width,
     H = self.height,
+    AllowResize = self.resizable,
+    AllowFocus = self.focusable,
+    AllowMove = self.movable,
+    BgColor = self.bgColor,
+    Border = self.border
   })
 
 
