@@ -29,6 +29,10 @@ function counterAppWindow()
   }
 end
 ```
+### Output
+
+<img width="60%"  alt="image" src="https://github.com/user-attachments/assets/709f3ed9-9ee6-426c-aeb5-efc50a810a07" />
+
 
 # Installation
 ```lua
