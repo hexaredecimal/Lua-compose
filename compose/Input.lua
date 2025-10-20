@@ -18,7 +18,7 @@ setmetatable(Input, {
     __call = function(_, opts)
         local self = setmetatable({}, Input)
         self.id = "Input_" .. UI.nextId()
-        self.value = tostring(opts.value)
+        self.value = opts.value or ""
         self.kind = opts.kind or Input.Kind.Text
         self.isPassword = opts.isPassword or false
         self.min = tonumber(opts.min) or 0
@@ -33,16 +33,19 @@ setmetatable(Input, {
 function Input:render()
 
   local isNumber = self.kind == Input.Kind.Number
-  if Slab.Input(self.id, {
-      NumbersOnly = isNumber, 
-      isNumber and {
-        IsPassword = self.isPassword,
-        MinNumber = self.min,
-        MaxNumber = self.max,
-        ReadOnly = self.readOnly,
-        ReturnOnText = true
-      } or {ReturnOnText = false, ReadOnly = self.readOnly, IsPassword = self.isPassword}
-      }) then
+  local options = {
+    Text = tostring(self.value),
+    NumbersOnly = isNumber, 
+    ReadOnly = self.readOnly, 
+    IsPassword = self.isPassword
+  }
+  
+  if isNumber then 
+    options.MinNumber = self.min
+    options.MaxNumber = self.max
+  end
+  
+  if Slab.Input(self.id, options) then
     if self.kind == Input.Kind.Number then 
       self.value = Slab.GetInputNumber()
     else 
