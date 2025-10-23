@@ -19,24 +19,32 @@ setmetatable(FileDialog, {
     __call = function(_, opts)
         local self = setmetatable({}, FileDialog)
 
-        self.show = true
+        self.show = opts.show or false
         self.onResult = opts.onResult or function(_) end
+        self.onCancel = opts.onCancel or function(_) end
         self.kind = opts.kind or FileDialog.Kind.OpenFile
+        self.filters = opts.filters
+        self.directory = opts.directory or love.filesystem.getSourceBaseDirectory()
         
-        if self.show then
-          local Result = Slab.FileDialog({Type = self.kind})
 
-          if Result ~= "" or Result ~= "Cancel" then
-            self.show = false
-            self.onResult(Result.Files)
-          end
-        end
-        
         return self
     end
 })
 
 function FileDialog:render()
+    if self.show then
+      local Result = Slab.FileDialog({
+        Type = self.kind,
+        Filters = self.filters,
+        Directory = self.directory 
+      })
+
+      if Result.Button == "Result" or #Result.Files > 0 then
+        self.onResult(Result.Files)
+      elseif Result.Button == "Cancel" then
+        self.onCancel(not self.show)
+      end
+    end
 end
 
 
