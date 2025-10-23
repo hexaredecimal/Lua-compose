@@ -30,7 +30,7 @@ function MessageDialog:render()
     if self.show then
       local Result = Slab.MessageBox(self.title, self.text)
       if Result ~= "" then
-        self.onClose(false)
+        self.onClose()
       end
     end
 end
