@@ -58,12 +58,14 @@ setmetatable(Window, {
 })
 
 function Window:render()
+  if not self.isOpen then return nil end
   
-  Slab.BeginWindow(self.id, {
+  local options =  {
     Title = self.title, 
     IsOpen = self.isOpen,
     ShowMinimize = self.minimizable,
     AutoSizeWindow = self.resizable,
+    AutoSizeContent = true,
     W = self.width,
     H = self.height,
     AllowResize = self.resizable,
@@ -71,7 +73,9 @@ function Window:render()
     AllowMove = self.movable,
     BgColor = self.bgColor,
     Border = self.border
-  })
+  }
+  
+  Slab.BeginWindow(self.id, options)
 
 
   UI.push(self)
@@ -88,8 +92,8 @@ function Window:render()
   end
   
   UI.pop()
-  
   Slab.EndWindow()
+  
 end 
 
 return Window
