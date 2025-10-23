@@ -14,7 +14,7 @@ setmetatable(TreeLeaf, {
         local self = setmetatable({}, TreeLeaf)
         self.id = UI.nextId()
         self.text = opts.text or "Leaf " .. self.id
-        
+        self.onClick = opts.onClick or function() end
         return self
     end
 })
@@ -22,6 +22,7 @@ setmetatable(TreeLeaf, {
 function TreeLeaf:render()
    local treeId = "Tree_" .. self.id
   if Slab.BeginTree(treeId, {Label = self.text, IsLeaf = true}) then
+    self.onClick()
   end
   
 end
