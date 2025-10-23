@@ -13,7 +13,7 @@ setmetatable(Row, {
     __call = function(_, opts)
         local self = setmetatable({}, Row)
         self.children = {}
-        self.growHorizontally = opts.growHorizontally or false
+        self.growHorizontally = opts.growHorizontally or true
         self.growVertically = opts.growVertically or false
         
         self.id = "Row_" .. UI.nextId()
