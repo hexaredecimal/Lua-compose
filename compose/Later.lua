@@ -1,8 +1,8 @@
 if SLAB_PATH == nil then
-	SLAB_PATH = (...):match("(.-)[^%.]+$")
+  SLAB_PATH = (...):match("(.-)[^%.]+$")
 end
 
-local Slab = require (SLAB_PATH .. 'API')
+local Slab = require(SLAB_PATH .. 'API')
 
 local Later = { drawCalls = {} }
 
@@ -16,7 +16,7 @@ function Later.draw(func)
 end
 
 function Later.perform(func)
-  for _, func in ipairs(Later.drawCalls) do 
+  for _, func in ipairs(Later.drawCalls) do
     func()
   end
 end

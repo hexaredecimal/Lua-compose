@@ -1,9 +1,9 @@
 if SLAB_PATH == nil then
-	SLAB_PATH = (...):match("(.-)[^%.]+$")
+  SLAB_PATH = (...):match("(.-)[^%.]+$")
 end
 
-local Slab = require (SLAB_PATH .. 'API')
-local Style = require (SLAB_PATH .. 'Style')
+local Slab = require(SLAB_PATH .. 'API')
+local Style = require(SLAB_PATH .. 'Style')
 local UI = require(SLAB_PATH .. "UI")
 local Later = require(SLAB_PATH .. "Later")
 local Remember = require(SLAB_PATH .. "Remember")

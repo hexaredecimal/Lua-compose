@@ -30,14 +30,13 @@ function List:render()
     local isSelected = (self.selected == index)
     local itemId = listId .. "_Item_" .. index
 
-    Slab.BeginListBoxItem(itemId, {Selected = isSelected})
-    
+    Slab.BeginListBoxItem(itemId, { Selected = isSelected })
+
     local child = self.each(item)
     if type(child) == "table" and child.render then
       child:render()
     end
 
-    -- Handle clicks
     if Slab.IsListBoxItemClicked() then
       self.selected = index
       self.onSelect(index)

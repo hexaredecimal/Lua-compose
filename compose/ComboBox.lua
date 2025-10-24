@@ -22,21 +22,17 @@ setmetatable(ComboBox, {
 
 function ComboBox:render()
   local comboId = "ComboBox_" .. self.id
-  
-  if Slab.BeginComboBox(comboId, {Selected = self.selected}) then
-  
-    for index, item in ipairs(self.items) do
 
+  if Slab.BeginComboBox(comboId, { Selected = self.selected }) then
+    for index, item in ipairs(self.items) do
       if Slab.TextSelectable(tostring(item)) then
         self.selected = index
         self.onSelect(index)
       end
-
     end
-    
-    Slab.EndComboBox()
-  end 
 
+    Slab.EndComboBox()
+  end
 end
 
 return ComboBox

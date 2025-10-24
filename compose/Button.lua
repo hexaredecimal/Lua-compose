@@ -1,9 +1,8 @@
-
 if SLAB_PATH == nil then
-	SLAB_PATH = (...):match("(.-)[^%.]+$")
+  SLAB_PATH = (...):match("(.-)[^%.]+$")
 end
 
-local Slab = require (SLAB_PATH .. 'API')
+local Slab = require(SLAB_PATH .. 'API')
 
 
 
@@ -23,8 +22,6 @@ function Button:render()
   if Slab.Button(self.text) then
     self.onClick()
   end
-
 end
 
 return Button
-

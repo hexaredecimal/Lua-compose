@@ -1,67 +1,65 @@
-
 if SLAB_PATH == nil then
-	SLAB_PATH = (...):match("(.-)[^%.]+$")
+  SLAB_PATH = (...):match("(.-)[^%.]+$")
 end
 
-local Slab = require (SLAB_PATH .. 'API')
+local Slab = require(SLAB_PATH .. 'API')
 local UI = require(SLAB_PATH .. "UI")
 local Remember = require(SLAB_PATH .. "Remember")
 
 
 local Window = {}
 Window.__index = Window
-Window._initialized = false   -- class-level flag
 
 Window.defaults = {
-    width = 100,
-    height = 50,
-    title = "My Window",
-    isOpen = true,
-    minimizable = true,
-    resizable = true,
-    movable = true,
-    focusable = true,
-    border = 4.0
+  width = 100,
+  height = 50,
+  title = "My Window",
+  isOpen = true,
+  minimizable = true,
+  resizable = true,
+  movable = true,
+  focusable = true,
+  border = 4.0
 }
 
 setmetatable(Window, {
-    __call = function(_, opts)
-        opts = opts or {}
-        local self = setmetatable({}, Window)
+  __call = function(_, opts)
+    opts             = opts or {}
+    local self       = setmetatable({}, Window)
 
-        self.width    = opts.width    or Window.defaults.width
-        self.height   = opts.height   or Window.defaults.height
-        self.title    = opts.title    or Window.defaults.title
-        self.isOpen = opts.isOpen or Window.defaults.isOpen
-        self.minimizable = opts.minimizable or Window.defaults.minimizable
-        self.resizable = opts.resizable or Window.defaults.resizable
-        self.movable = opts.movable or Window.defaults.movable
-        self.focusable = opts.focusable or Window.defaults.focusable
-        self.bgColor = opts.bgColor
-        self.border = opts.border or Window.defaults.border
+    self.width       = opts.width or Window.defaults.width
+    self.height      = opts.height or Window.defaults.height
+    self.title       = opts.title or Window.defaults.title
+    self.isOpen      = opts.isOpen or Window.defaults.isOpen
+    self.minimizable = opts.minimizable or Window.defaults.minimizable
+    self.resizable   = opts.resizable or Window.defaults.resizable
+    self.movable     = opts.movable or Window.defaults.movable
+    self.focusable   = opts.focusable or Window.defaults.focusable
+    self.bgColor     = opts.bgColor
+    self.border      = opts.border or Window.defaults.border
 
 
-        self.id = opts.id or "Window_" .. UI.nextId()
-        self.children = {}
-        Remember.setWindowContext(self.title) 
+    self.id = "Window_" .. UI.nextId()
+    self.children = {}
+    Remember.setWindowContext(self.title)
 
-        
-        for _, child in pairs(opts) do
-          if type(child) == "table" and child.render then
-            table.insert(self.children, child)
-          elseif type(child) == "function" then
-            table.insert(self.children, child)
-          end
-        end
-        return self
+
+    for _, child in pairs(opts) do
+      if type(child) == "table" and child.render then
+        table.insert(self.children, child)
+      elseif type(child) == "function" then
+        table.insert(self.children, child)
+      end
     end
+    return self
+  end
 })
 
 function Window:render()
   if not self.isOpen then return nil end
-  
-  local options =  {
-    Title = self.title, 
+
+  local options = {
+    Title = self.title,
     IsOpen = self.isOpen,
     ShowMinimize = self.minimizable,
     AutoSizeWindow = self.resizable,
@@ -74,12 +72,12 @@ function Window:render()
     BgColor = self.bgColor,
     Border = self.border
   }
-  
+
   Slab.BeginWindow(self.id, options)
 
 
   UI.push(self)
-  
+
   for index, child in pairs(self.children) do
     if type(child) == "table" and child.render then
       child:render()
@@ -90,10 +88,9 @@ function Window:render()
       end
     end
   end
-  
+
   UI.pop()
   Slab.EndWindow()
-  
-end 
+end
 
 return Window
